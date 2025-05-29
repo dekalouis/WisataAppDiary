@@ -1,0 +1,7 @@
+{
+  "name": "2025-may-technical-test",
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/node": "^22.13.11"
+  }
+}
