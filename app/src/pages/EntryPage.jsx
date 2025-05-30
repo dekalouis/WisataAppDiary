@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { evaluate } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
-import { getDiaryContentById } from "../api/cms";
-import { renderDiaryContent } from "../utils/cms";
 
-function EntryPage({ entryId }) {
+import { getDiaryContentById } from "../../../api/cms";
+import { renderDiaryContent } from "../../../utils/cms";
+
+function EntryPage() {
+  const { id } = useParams();
   const [entry, setEntry] = useState(null);
   const [mdxContent, setMdxContent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,7 +15,7 @@ function EntryPage({ entryId }) {
 
   useEffect(() => {
     const fetchEntry = async () => {
-      if (!entryId) {
+      if (!id) {
         setError("No entry ID provided");
         setLoading(false);
         return;
@@ -23,7 +26,7 @@ function EntryPage({ entryId }) {
         setError(null);
 
         // Using CMS function to fetch diary entry by ID
-        const entryData = await getDiaryContentById(entryId);
+        const entryData = await getDiaryContentById(id);
 
         if (!entryData || entryData.length === 0) {
           setError("Diary entry not found");
@@ -76,7 +79,7 @@ function EntryPage({ entryId }) {
     };
 
     fetchEntry();
-  }, [entryId]);
+  }, [id]);
 
   // Custom MDX components for rendering embeds
   const mdxComponents = {
@@ -189,7 +192,7 @@ function EntryPage({ entryId }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -202,7 +205,7 @@ function EntryPage({ entryId }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
             <div className="flex items-center">
@@ -234,7 +237,7 @@ function EntryPage({ entryId }) {
 
   if (!entry) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center py-12">
             <p className="text-gray-500">Diary entry not found.</p>
@@ -245,11 +248,11 @@ function EntryPage({ entryId }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="py-8">
       <div className="max-w-4xl mx-auto px-4">
-        <button
-          onClick={() => window.history.back()}
-          className="mb-6 text-blue-600 hover:text-blue-800 flex items-center"
+        <Link
+          to="/"
+          className="mb-6 text-blue-600 hover:text-blue-800 flex items-center inline-flex"
         >
           <svg
             className="w-4 h-4 mr-2"
@@ -265,7 +268,7 @@ function EntryPage({ entryId }) {
             />
           </svg>
           Back to Feed
-        </button>
+        </Link>
 
         <article className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-8">

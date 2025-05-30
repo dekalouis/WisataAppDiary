@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getDiaryFeed } from "../api/cms";
+import { Link } from "react-router-dom";
+import { getDiaryFeed } from "../../../api/cms";
 import {
   getDiaryContentSEOAttributes,
   getSizeOptimizedImageUrl,
   CDN_WISATA_IMG_SIZE,
-} from "../utils/cms";
+} from "../../../utils/cms";
 
 function FeedPage() {
   const [diaryEntries, setDiaryEntries] = useState([]);
@@ -19,6 +20,7 @@ function FeedPage() {
 
         // Using CMS function to fetch diary feed
         const entries = await getDiaryFeed();
+        console.log("Fetched diary entries:", entries);
         setDiaryEntries(entries);
       } catch (err) {
         console.error("Failed to fetch diary feed:", err);
@@ -31,6 +33,7 @@ function FeedPage() {
     fetchDiaryFeed();
   }, []);
 
+  //bersihin
   const createExcerpt = (content, maxLength = 150) => {
     if (!content) return "";
 
@@ -62,14 +65,9 @@ function FeedPage() {
     return null;
   };
 
-  const handleEntryClick = (entryId) => {
-    console.log(`Navigate to entry: ${entryId}`);
-    // For navigation: navigate(`/entry/${entryId}`)
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Diary Feed</h1>
           <div className="flex items-center justify-center py-12">
@@ -83,7 +81,7 @@ function FeedPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Diary Feed</h1>
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
@@ -115,7 +113,7 @@ function FeedPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="py-8">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Diary Feed</h1>
 
@@ -128,14 +126,15 @@ function FeedPage() {
             {diaryEntries.map((entry) => {
               // Using CMS function to extract SEO attributes for preview
               const seoData = getDiaryContentSEOAttributes(entry);
+              console.log("SEO Data for entry:", seoData);
               const firstImage = getFirstImage(entry.content);
               const excerpt = createExcerpt(entry.content);
 
               return (
-                <article
+                <Link
                   key={entry.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                  onClick={() => handleEntryClick(entry.id)}
+                  to={`/diary/${entry.id}`}
+                  className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                 >
                   {firstImage && (
                     <div className="aspect-w-16 aspect-h-9">
@@ -186,7 +185,7 @@ function FeedPage() {
                       </div>
                     )}
                   </div>
-                </article>
+                </Link>
               );
             })}
           </div>
