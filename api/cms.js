@@ -19,7 +19,7 @@ export async function getDiaryFeed() {
       id: ids,
       status: "posted",
     });
-    return data;
+    return data.content;
   } catch (error) {
     console.error("Failed to fetch diary feed:", error);
     throw error;
@@ -41,7 +41,7 @@ export async function getDiaryContentById(id) {
       id: id,
       status: "posted",
     });
-    return data;
+    return data.content;
   } catch (error) {
     console.error(`Failed to fetch diary content for id ${id}:`, error);
     throw error;
