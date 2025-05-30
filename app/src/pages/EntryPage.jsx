@@ -34,6 +34,7 @@ function EntryPage() {
         }
 
         const diaryEntry = Array.isArray(entryData) ? entryData[0] : entryData;
+        console.log("FETCHED ENTRY SATU INI:", diaryEntry);
         setEntry(diaryEntry);
 
         // Using CMS function to process diary content for MDX rendering
@@ -252,7 +253,7 @@ function EntryPage() {
       <div className="max-w-4xl mx-auto px-4">
         <Link
           to="/"
-          className="mb-6 text-blue-600 hover:text-blue-800 flex items-center inline-flex"
+          className="mb-6 text-blue-600 hover:text-blue-800 flex items-center"
         >
           <svg
             className="w-4 h-4 mr-2"
@@ -279,9 +280,9 @@ function EntryPage() {
             )}
 
             <div className="flex items-center gap-4 mb-8 text-sm text-gray-500">
-              {entry.published_at && (
+              {entry.created_dt && (
                 <span>
-                  {new Date(entry.published_at).toLocaleDateString("en-US", {
+                  {new Date(entry.created_dt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",

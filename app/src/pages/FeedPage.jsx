@@ -20,7 +20,7 @@ function FeedPage() {
 
         // Using CMS function to fetch diary feed
         const entries = await getDiaryFeed();
-        console.log("Fetched diary entries:", entries);
+        console.log("FETCHED ENTRY:", entries);
         setDiaryEntries(entries);
       } catch (err) {
         console.error("Failed to fetch diary feed:", err);
@@ -126,7 +126,9 @@ function FeedPage() {
             {diaryEntries.map((entry) => {
               // Using CMS function to extract SEO attributes for preview
               const seoData = getDiaryContentSEOAttributes(entry);
-              console.log("SEO Data for entry:", seoData);
+              {
+                /* console.log("SEO Data for entry:", seoData); */
+              }
               const firstImage = getFirstImage(entry.content);
               const excerpt = createExcerpt(entry.content);
 
@@ -159,8 +161,8 @@ function FeedPage() {
 
                     <div className="flex items-center justify-between text-sm text-gray-500">
                       <span>
-                        {entry.published_at
-                          ? new Date(entry.published_at).toLocaleDateString()
+                        {entry.created_dt
+                          ? new Date(entry.created_dt).toLocaleDateString()
                           : "No date"}
                       </span>
 
