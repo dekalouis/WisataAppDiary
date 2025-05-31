@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getDiaryFeed } from "../../../api/cms";
+import { getDiaryFeed } from "../../api/cms";
 import {
   getDiaryContentSEOAttributes,
   getSizeOptimizedImageUrl,
   CDN_WISATA_IMG_SIZE,
-} from "../../../utils/cms";
+} from "../../utils/cms";
 
 function FeedPage() {
   const [diaryEntries, setDiaryEntries] = useState([]);
