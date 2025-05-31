@@ -15,6 +15,7 @@ function FeedPage() {
     const fetchDiaryFeed = async () => {
       const entries = await getDiaryFeed();
       setDiaryEntries(entries);
+      console.log("DAFTAR ENTRY:", entries);
       setLoading(false);
     };
 
@@ -24,11 +25,12 @@ function FeedPage() {
   const createExcerpt = (content, maxLength = 150) => {
     if (!content) return "";
     const cleanText = content
-      .replace(/#{1,6}\s+/g, "")
-      .replace(/\*\*(.+?)\*\*/g, "$1")
-      .replace(/\*(.+?)\*/g, "$1")
-      .replace(/\[(.+?)\]\(.+?\)/g, "$1")
-      .replace(/<[^>]*>/g, "")
+      .replace(/!\[.*?\]\(.*?\)/g, "") // Remove markdown image
+      .replace(/#{1,6}\s+/g, "") // Remove markdown heading
+      .replace(/\*\*(.+?)\*\*/g, "$1") // Bold
+      .replace(/\*(.+?)\*/g, "$1") // Italics
+      .replace(/\[(.+?)\]\(.+?\)/g, "$1") // Links
+      .replace(/<[^>]*>/g, "") // HTML tags
       .trim();
     return cleanText.length > maxLength
       ? cleanText.substring(0, maxLength) + "..."

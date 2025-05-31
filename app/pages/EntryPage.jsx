@@ -24,6 +24,7 @@ function EntryPage() {
       const entryData = await getDiaryContentById(id);
       const diaryEntry = Array.isArray(entryData) ? entryData[0] : entryData;
       setEntry(diaryEntry);
+      console.log("ISINYA:", diaryEntry);
 
       const { processedContent, metadata } = renderDiaryContent(diaryEntry);
       const mdxModule = await evaluate(processedContent, {
@@ -105,7 +106,8 @@ function EntryPage() {
               </div>
             )}
 
-            <div className="prose prose-lg max-w-none">
+            {/* <div className="prose prose-lg max-w-none"> */}
+            <div className="prose prose-lg max-w-none prose-li:my-2 prose-ul:pl-5">
               <Content components={mdxComponents} />
             </div>
 
