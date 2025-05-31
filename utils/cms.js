@@ -87,7 +87,6 @@ export function getDiaryContentSEOAttributes(contentData) {
   let title = contentData.meta.title || "Title";
   let description = contentData.meta.description || contentData.excerpt || "";
   let image = contentData.meta.featured_image || contentData.image || "";
-  featured;
 
   if (!title && contentData.content) {
     const titleMatch = contentData.content.match(/^#\s+(.+)$/m);
