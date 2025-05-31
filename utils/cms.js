@@ -159,6 +159,35 @@ export function getDiaryContentSEOAttributes(contentData) {
  * - \<TiktokEmbed />
  * - \<TwitterEmbed />
  */
+
+export function renderDiaryContent(contentData) {
+  if (!contentData || !contentData.content) {
+    return {
+      processedContent: "",
+      metadata: {},
+      rawContent: "",
+    };
+  }
+
+  const processedContent = contentData.content;
+
+  const metadata = {
+    seo: getDiaryContentSEOAttributes(contentData),
+    wordCount: processedContent.split(/\s+/).length,
+    readingTime: Math.ceil(processedContent.split(/\s+/).length / 200),
+    publishedAt: contentData.published_at,
+    updatedAt: contentData.updated_at,
+    tags: contentData.tags || [],
+    author: contentData.author || {},
+  };
+
+  return {
+    processedContent,
+    metadata,
+    rawContent: contentData.content,
+  };
+}
+
 // export function renderDiaryContent(contentData) {
 //   // Return empty structure if no content data provided
 //   if (!contentData || !contentData.content) {
@@ -168,7 +197,6 @@ export function getDiaryContentSEOAttributes(contentData) {
 //       metadata: {},
 //     };
 //   }
-
 
 //   let processedContent = contentData.content;
 
@@ -311,31 +339,3 @@ export function getDiaryContentSEOAttributes(contentData) {
 //     rawContent: contentData.content, // Original unprocessed content
 //   };
 // }
-
-export function renderDiaryContent(contentData) {
-  if (!contentData || !contentData.content) {
-    return {
-      processedContent: "",
-      metadata: {},
-      rawContent: "",
-    };
-  }
-
-  const processedContent = contentData.content;
-
-  const metadata = {
-    seo: getDiaryContentSEOAttributes(contentData),
-    wordCount: processedContent.split(/\s+/).length,
-    readingTime: Math.ceil(processedContent.split(/\s+/).length / 200),
-    publishedAt: contentData.published_at,
-    updatedAt: contentData.updated_at,
-    tags: contentData.tags || [],
-    author: contentData.author || {},
-  };
-
-  return {
-    processedContent,
-    metadata,
-    rawContent: contentData.content,
-  };
-}

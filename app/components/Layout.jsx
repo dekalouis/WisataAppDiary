@@ -2,25 +2,28 @@ import { Link } from "react-router-dom";
 
 function Layout({ children }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-blue-50 text-gray-900">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             to="/"
-            className="text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
+            className="text-2xl font-extrabold tracking-tight text-gray-600 hover:text-gray-700 transition-colors"
           >
             WisataApp Diary
           </Link>
         </div>
       </header>
 
-      <main>{children}</main>
+      {/* Main content */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-2">
+        {children}
+      </main>
 
-      <footer className="bg-white border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <p className="text-center text-gray-500 text-sm">
-            © 2024 WisataApp. Built with React + Vite
-          </p>
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-6 text-center text-sm text-gray-500">
+          © 2024 WisataApp · Built with React + Vite
         </div>
       </footer>
     </div>
