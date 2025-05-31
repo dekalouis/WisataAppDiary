@@ -33,48 +33,40 @@ const CDN_TWITTER_IMG_SIZE = {
  * Note that some images may not have optimized URL variants.
  */
 export function getSizeOptimizedImageUrl(originalUrl, desiredSize) {
-  // Return original URL if either parameter is missing
   if (!originalUrl || !desiredSize) {
     return originalUrl;
   }
 
   try {
-    // Handle Wisata CDN URLs
     if (originalUrl.includes(CDN_WISATA_URL)) {
-      // Check if desired size is valid, otherwise use medium as default
       const sizeKey = Object.values(CDN_WISATA_IMG_SIZE).includes(desiredSize)
         ? desiredSize
         : CDN_WISATA_IMG_SIZE.MD;
-      // Find the last dot in URL to separate filename from extension
+
       const lastDotIndex = originalUrl.lastIndexOf(".");
-      // If no extension found, return original URL
+
       if (lastDotIndex === -1) return originalUrl;
 
-      // Split URL into base part and extension
-      const baseUrl = originalUrl.substring(0, lastDotIndex); // Everything before .jpg
-      const extension = originalUrl.substring(lastDotIndex); // .jpg part
-      // Create optimized URL by adding size suffix: filename_md.jpg
+      const baseUrl = originalUrl.substring(0, lastDotIndex);
+      const extension = originalUrl.substring(lastDotIndex);
+
       return `${baseUrl}_${sizeKey}${extension}`;
     }
 
-    // Handle Twitter CDN URLs
     if (originalUrl.includes(CDN_TWITTER_URL)) {
-      // Check if desired size is valid, otherwise use medium as default
       const sizeKey = Object.values(CDN_TWITTER_IMG_SIZE).includes(desiredSize)
         ? desiredSize
         : CDN_TWITTER_IMG_SIZE.MEDIUM;
-      // Parse URL to modify query parameters
+
       const url = new URL(originalUrl);
-      // Add/modify the 'name' parameter which controls Twitter image size
+
       url.searchParams.set("name", sizeKey);
-      // Return the modified URL as string
+
       return url.toString();
     }
 
-    // If URL is not from supported CDNs, return original URL unchanged
     return originalUrl;
   } catch (error) {
-    // If any error occurs during URL processing, log it and return original
     console.error("Error optimizing image URL:", error);
     return originalUrl;
   }
@@ -84,8 +76,6 @@ export function getSizeOptimizedImageUrl(originalUrl, desiredSize) {
  * TASK: Extracts SEO attributes from diary content
  */
 export function getDiaryContentSEOAttributes(contentData) {
-  // console.log(`>>> isinya!!!`, contentData);
-  // Return empty SEO object if no content data provided
   if (!contentData) {
     return {
       title: "",
@@ -94,53 +84,43 @@ export function getDiaryContentSEOAttributes(contentData) {
     };
   }
 
-  // Extract basic SEO fields from content data (if they exist)
-  let title = contentData.meta.title || "Title"; // Use title field
-  let description = contentData.meta.description || contentData.excerpt || ""; // Use description or excerpt
-  let image = contentData.meta.featured_image || contentData.image || ""; // Use featured image or image
+  let title = contentData.meta.title || "Title";
+  let description = contentData.meta.description || contentData.excerpt || "";
+  let image = contentData.meta.featured_image || contentData.image || "";
+  featured;
 
-  // Extract title from markdown content if not available in metadata
   if (!title && contentData.content) {
-    // Look for markdown header (# Title) at the beginning of a line
     const titleMatch = contentData.content.match(/^#\s+(.+)$/m);
     if (titleMatch) {
-      // Extract the text after the # symbol and trim whitespace
       title = titleMatch[1].trim();
     }
   }
 
-  // Extract description from content if not available in metadata
   if (!description && contentData.content) {
-    // Clean up markdown syntax to get plain text
     const cleanContent = contentData.content
-      .replace(/#{1,6}\s+/g, "") // Remove headers (# ## ### etc.)
-      .replace(/\*\*(.+?)\*\*/g, "$1") // Remove bold syntax (**text**)
-      .replace(/\*(.+?)\*/g, "$1") // Remove italic syntax (*text*)
-      .replace(/\[(.+?)\]\(.+?\)/g, "$1") // Remove links [text](url) -> text
-      .replace(/<[^>]*>/g, "") // Remove HTML/JSX tags
-      .trim(); // Remove leading/trailing spaces
+      .replace(/#{1,6}\s+/g, "")
+      .replace(/\*\*(.+?)\*\*/g, "$1")
+      .replace(/\*(.+?)\*/g, "$1")
+      .replace(/\[(.+?)\]\(.+?\)/g, "$1")
+      .replace(/<[^>]*>/g, "")
+      .trim();
 
-    // Get the first paragraph (text before double newline)
     const firstParagraph = cleanContent.split("\n\n")[0];
-    // Limit description to 160 characters for SEO best practices
+
     description = firstParagraph
       ? firstParagraph.substring(0, 160) + "..."
       : "";
   }
 
-  // Extract first image from content if not available in metadata
   if (!image && contentData.content) {
-    // Look for markdown image syntax ![alt](url) or HTML img src
     const imageMatch =
-      contentData.content.match(/!\[.*?\]\((.+?)\)/) || // Markdown image
-      contentData.content.match(/src=["']([^"']+)["']/); // HTML img tag
+      contentData.content.match(/!\[.*?\]\((.+?)\)/) ||
+      contentData.content.match(/src=["']([^"']+)["']/);
     if (imageMatch) {
-      // Extract the URL from the matched pattern
       image = imageMatch[1];
     }
   }
 
-  // Return cleaned and trimmed SEO attributes
   return {
     title: title.trim(),
     description: description.trim(),
