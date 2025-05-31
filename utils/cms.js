@@ -159,157 +159,183 @@ export function getDiaryContentSEOAttributes(contentData) {
  * - \<TiktokEmbed />
  * - \<TwitterEmbed />
  */
+// export function renderDiaryContent(contentData) {
+//   // Return empty structure if no content data provided
+//   if (!contentData || !contentData.content) {
+//     return {
+//       processedContent: "",
+//       components: {},
+//       metadata: {},
+//     };
+//   }
+
+
+//   let processedContent = contentData.content;
+
+//   const components = {
+//     // YouTube video embed component - renders as iframe
+//     YoutubeEmbed: ({ videoId, title = "YouTube Video" }) => {
+//       // Create YouTube embed URL
+//       const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+//       // Return React element (will be JSX when used in component)
+//       return {
+//         type: "iframe",
+//         props: {
+//           src: embedUrl,
+//           title: title,
+//           width: "100%",
+//           height: "315",
+//           frameBorder: "0",
+//           allowFullScreen: true,
+//         },
+//       };
+//     },
+
+//     // Instagram post embed component - uses Instagram's embed API
+//     InstagramEmbed: ({ postId, caption = "" }) => {
+//       // Create Instagram embed URL
+//       const embedUrl = `https://www.instagram.com/p/${postId}/embed/`;
+//       // Return iframe for Instagram post
+//       return {
+//         type: "iframe",
+//         props: {
+//           src: embedUrl,
+//           width: "100%",
+//           height: "400",
+//           frameBorder: "0",
+//           scrolling: "no",
+//           allowTransparency: true,
+//         },
+//       };
+//     },
+
+//     // TikTok video embed component - uses TikTok's embed API
+//     TiktokEmbed: ({ videoId, username = "" }) => {
+//       // Create TikTok embed URL
+//       const embedUrl = `https://www.tiktok.com/embed/v2/${videoId}`;
+//       // Return iframe for TikTok video
+//       return {
+//         type: "iframe",
+//         props: {
+//           src: embedUrl,
+//           width: "100%",
+//           height: "500",
+//           frameBorder: "0",
+//           scrolling: "no",
+//           allowFullScreen: true,
+//         },
+//       };
+//     },
+
+//     // Twitter tweet embed component - uses Twitter's embed API
+//     TwitterEmbed: ({ tweetId, username = "" }) => {
+//       // For Twitter, we'll use a placeholder approach since Twitter's embed requires special handling
+//       // In a real app, you'd use Twitter's widget.js or a Twitter embed library
+//       return {
+//         type: "div",
+//         props: {
+//           className: "twitter-embed-placeholder",
+//           children: `Twitter Post: ${tweetId}`,
+//           style: {
+//             border: "1px solid #ccc",
+//             padding: "20px",
+//             borderRadius: "8px",
+//             backgroundColor: "#f9f9f9",
+//           },
+//         },
+//       };
+//     },
+
+//     // Enhanced image component with automatic optimization
+//     img: ({ src, alt = "", ...props }) => ({
+//       type: "img",
+//       props: {
+//         src: getSizeOptimizedImageUrl(src, CDN_WISATA_IMG_SIZE.MD), // Auto-optimize images to medium size
+//         alt: alt, // Alt text for accessibility
+//         loading: "lazy", // Lazy load images for performance
+//         style: { maxWidth: "100%", height: "auto" }, // Responsive images
+//         ...props, // Spread any additional props
+//       },
+//     }),
+
+//     // Enhanced paragraph component
+//     p: ({ children, ...props }) => ({
+//       type: "p",
+//       props: {
+//         style: { marginBottom: "1rem", lineHeight: "1.6" },
+//         children,
+//         ...props,
+//       },
+//     }),
+
+//     // Enhanced heading components
+//     h1: ({ children, ...props }) => ({
+//       type: "h1",
+//       props: {
+//         style: { fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" },
+//         children,
+//         ...props,
+//       },
+//     }),
+
+//     h2: ({ children, ...props }) => ({
+//       type: "h2",
+//       props: {
+//         style: {
+//           fontSize: "1.5rem",
+//           fontWeight: "bold",
+//           marginBottom: "0.75rem",
+//         },
+//         children,
+//         ...props,
+//       },
+//     }),
+//   };
+
+//   // Extract and calculate metadata about the content
+//   const metadata = {
+//     seo: getDiaryContentSEOAttributes(contentData), // SEO attributes
+//     wordCount: processedContent.split(/\s+/).length, // Count words in content
+//     readingTime: Math.ceil(processedContent.split(/\s+/).length / 200), // Estimate reading time (~200 words/min)
+//     publishedAt: contentData.published_at, // Publication date
+//     updatedAt: contentData.updated_at, // Last update date
+//     tags: contentData.tags || [], // Content tags
+//     author: contentData.author || {}, // Author information
+//   };
+
+//   // Return processed content with all necessary data for modern MDX rendering
+//   return {
+//     processedContent, // The MDX content ready for evaluation with @mdx-js/mdx
+//     components, // Component definitions for MDX (compatible with evaluate function)
+//     metadata, // Calculated metadata
+//     rawContent: contentData.content, // Original unprocessed content
+//   };
+// }
+
 export function renderDiaryContent(contentData) {
-  // Return empty structure if no content data provided
   if (!contentData || !contentData.content) {
     return {
       processedContent: "",
-      components: {},
       metadata: {},
+      rawContent: "",
     };
   }
 
-  // Get the raw MDX content string
-  let processedContent = contentData.content;
+  const processedContent = contentData.content;
 
-  // Define custom components for modern MDX rendering using @mdx-js/mdx
-  // These React components will be used to render special embeds in the content
-  const components = {
-    // YouTube video embed component - renders as iframe
-    YoutubeEmbed: ({ videoId, title = "YouTube Video" }) => {
-      // Create YouTube embed URL
-      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-      // Return React element (will be JSX when used in component)
-      return {
-        type: "iframe",
-        props: {
-          src: embedUrl,
-          title: title,
-          width: "100%",
-          height: "315",
-          frameBorder: "0",
-          allowFullScreen: true,
-        },
-      };
-    },
-
-    // Instagram post embed component - uses Instagram's embed API
-    InstagramEmbed: ({ postId, caption = "" }) => {
-      // Create Instagram embed URL
-      const embedUrl = `https://www.instagram.com/p/${postId}/embed/`;
-      // Return iframe for Instagram post
-      return {
-        type: "iframe",
-        props: {
-          src: embedUrl,
-          width: "100%",
-          height: "400",
-          frameBorder: "0",
-          scrolling: "no",
-          allowTransparency: true,
-        },
-      };
-    },
-
-    // TikTok video embed component - uses TikTok's embed API
-    TiktokEmbed: ({ videoId, username = "" }) => {
-      // Create TikTok embed URL
-      const embedUrl = `https://www.tiktok.com/embed/v2/${videoId}`;
-      // Return iframe for TikTok video
-      return {
-        type: "iframe",
-        props: {
-          src: embedUrl,
-          width: "100%",
-          height: "500",
-          frameBorder: "0",
-          scrolling: "no",
-          allowFullScreen: true,
-        },
-      };
-    },
-
-    // Twitter tweet embed component - uses Twitter's embed API
-    TwitterEmbed: ({ tweetId, username = "" }) => {
-      // For Twitter, we'll use a placeholder approach since Twitter's embed requires special handling
-      // In a real app, you'd use Twitter's widget.js or a Twitter embed library
-      return {
-        type: "div",
-        props: {
-          className: "twitter-embed-placeholder",
-          children: `Twitter Post: ${tweetId}`,
-          style: {
-            border: "1px solid #ccc",
-            padding: "20px",
-            borderRadius: "8px",
-            backgroundColor: "#f9f9f9",
-          },
-        },
-      };
-    },
-
-    // Enhanced image component with automatic optimization
-    img: ({ src, alt = "", ...props }) => ({
-      type: "img",
-      props: {
-        src: getSizeOptimizedImageUrl(src, CDN_WISATA_IMG_SIZE.MD), // Auto-optimize images to medium size
-        alt: alt, // Alt text for accessibility
-        loading: "lazy", // Lazy load images for performance
-        style: { maxWidth: "100%", height: "auto" }, // Responsive images
-        ...props, // Spread any additional props
-      },
-    }),
-
-    // Enhanced paragraph component
-    p: ({ children, ...props }) => ({
-      type: "p",
-      props: {
-        style: { marginBottom: "1rem", lineHeight: "1.6" },
-        children,
-        ...props,
-      },
-    }),
-
-    // Enhanced heading components
-    h1: ({ children, ...props }) => ({
-      type: "h1",
-      props: {
-        style: { fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" },
-        children,
-        ...props,
-      },
-    }),
-
-    h2: ({ children, ...props }) => ({
-      type: "h2",
-      props: {
-        style: {
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-          marginBottom: "0.75rem",
-        },
-        children,
-        ...props,
-      },
-    }),
-  };
-
-  // Extract and calculate metadata about the content
   const metadata = {
-    seo: getDiaryContentSEOAttributes(contentData), // SEO attributes
-    wordCount: processedContent.split(/\s+/).length, // Count words in content
-    readingTime: Math.ceil(processedContent.split(/\s+/).length / 200), // Estimate reading time (~200 words/min)
-    publishedAt: contentData.published_at, // Publication date
-    updatedAt: contentData.updated_at, // Last update date
-    tags: contentData.tags || [], // Content tags
-    author: contentData.author || {}, // Author information
+    seo: getDiaryContentSEOAttributes(contentData),
+    wordCount: processedContent.split(/\s+/).length,
+    readingTime: Math.ceil(processedContent.split(/\s+/).length / 200),
+    publishedAt: contentData.published_at,
+    updatedAt: contentData.updated_at,
+    tags: contentData.tags || [],
+    author: contentData.author || {},
   };
 
-  // Return processed content with all necessary data for modern MDX rendering
   return {
-    processedContent, // The MDX content ready for evaluation with @mdx-js/mdx
-    components, // Component definitions for MDX (compatible with evaluate function)
-    metadata, // Calculated metadata
-    rawContent: contentData.content, // Original unprocessed content
+    processedContent,
+    metadata,
+    rawContent: contentData.content,
   };
 }

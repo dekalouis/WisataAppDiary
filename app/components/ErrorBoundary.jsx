@@ -1,69 +1,46 @@
 import React from "react";
 
 class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
+  state = { hasError: false };
 
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, errorInfo) {
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  componentDidCatch(error, info) {
+    console.error("ErrorBoundary caught:", error, info);
   }
+
+  handleReload = () => window.location.reload();
+  handleHome = () => (window.location.href = "/");
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-8 w-8 text-red-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Something went wrong
-                </h3>
-              </div>
-            </div>
-
-            <p className="text-gray-600 mb-4">
-              We're sorry, but something unexpected happened. Please try
-              refreshing the page.
+        <main className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
+          <section className="w-full max-w-sm bg-white shadow p-6 rounded-lg text-center">
+            <h2 className="text-xl font-semibold text-red-600 mb-2">
+              Something went wrong
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Please refresh the page or go back home.
             </p>
-
             <div className="flex gap-3">
               <button
-                onClick={() => window.location.reload()}
-                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                onClick={this.handleReload}
+                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
-                Refresh Page
+                Refresh
               </button>
-
               <button
-                onClick={() => (window.location.href = "/")}
-                className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
+                onClick={this.handleHome}
+                className="flex-1 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
               >
-                Go Home
+                Home
               </button>
             </div>
-          </div>
-        </div>
+          </section>
+        </main>
       );
     }
 
