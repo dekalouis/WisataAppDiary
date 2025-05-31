@@ -1,6 +1,6 @@
 const CDN_WISATA_URL = "https://cdn.wisata.app";
 const CDN_TWITTER_URL = "https://pbs.twimg.com";
-const CDN_WISATA_IMG_SIZE = {
+export const CDN_WISATA_IMG_SIZE = {
   TH: "th", // thumbnail
   XS: "xs", // extra small
   SM: "sm", // small
@@ -84,21 +84,20 @@ export function getSizeOptimizedImageUrl(originalUrl, desiredSize) {
  * TASK: Extracts SEO attributes from diary content
  */
 export function getDiaryContentSEOAttributes(contentData) {
+  // console.log(`>>> isinya!!!`, contentData);
   // Return empty SEO object if no content data provided
   if (!contentData) {
     return {
       title: "",
       description: "",
       image: "",
-      url: "",
     };
   }
 
   // Extract basic SEO fields from content data (if they exist)
-  let title = contentData.title || ""; // Use title field
-  let description = contentData.description || contentData.excerpt || ""; // Use description or excerpt
-  let image = contentData.featured_image || contentData.image || ""; // Use featured image or image
-  let url = contentData.url || contentData.slug || ""; // Use URL or slug
+  let title = contentData.meta.title || "Title"; // Use title field
+  let description = contentData.meta.description || contentData.excerpt || ""; // Use description or excerpt
+  let image = contentData.meta.featured_image || contentData.image || ""; // Use featured image or image
 
   // Extract title from markdown content if not available in metadata
   if (!title && contentData.content) {
@@ -146,7 +145,6 @@ export function getDiaryContentSEOAttributes(contentData) {
     title: title.trim(),
     description: description.trim(),
     image: image.trim(),
-    url: url.trim(),
   };
 }
 

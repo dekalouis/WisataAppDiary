@@ -20,7 +20,7 @@ export async function getDiaryFeed() {
       id: ids,
       status: "posted",
     });
-    return response;
+    return response.content;
   } catch (error) {
     console.error("Error fetching diary feed:", error);
     throw error;
@@ -42,7 +42,7 @@ export async function getDiaryContentById(id) {
       id: id,
       status: "posted",
     });
-    return response;
+    return response.content;
   } catch (error) {
     console.error(`Error fetching diary content for id ${id}:`, error);
     throw error;
