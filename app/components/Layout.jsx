@@ -5,10 +5,10 @@ function Layout({ children }) {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-blue-50 text-gray-900">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <Link
             to="/"
-            className="text-2xl font-extrabold tracking-tight text-gray-600 hover:text-gray-700 transition-colors"
+            className="text-2xl font-bold tracking-tight text-gray-600 hover:text-gray-700 transition-colors"
           >
             WisataApp Diary
           </Link>
@@ -16,7 +16,7 @@ function Layout({ children }) {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-2">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-1 lg:py-2">
         {children}
       </main>
 

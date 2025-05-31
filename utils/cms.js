@@ -87,7 +87,6 @@ export function getDiaryContentSEOAttributes(contentData) {
   let title = contentData.meta.title || "Title";
   let description = contentData.meta.description || contentData.excerpt || "";
   let image = contentData.meta.featured_image || contentData.image || "";
-  featured;
 
   if (!title && contentData.content) {
     const titleMatch = contentData.content.match(/^#\s+(.+)$/m);
@@ -149,7 +148,16 @@ export function renderDiaryContent(contentData) {
     };
   }
 
-  const processedContent = contentData.content;
+  let processedContent = contentData.content;
+
+  //fix bulletpoint
+  processedContent = processedContent.replace(
+    /(\n\s*-\s.+?)\n\s*\n(?=\s*-\s)/g,
+    "$1\n"
+  );
+
+  // Normalize bullet inden
+  processedContent = processedContent.replace(/\n\s+-/g, "\n-");
 
   const metadata = {
     seo: getDiaryContentSEOAttributes(contentData),

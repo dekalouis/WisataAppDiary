@@ -7,11 +7,6 @@ import { getDiaryContentById } from "../../api/cms";
 import { renderDiaryContent } from "../../utils/cms";
 import { mdxComponents } from "../components/MDXRenderer";
 
-//memoize so we dont have to repeat the same mdx
-// const mdxCache = new Map();
-
-// Assumes mdxComponents and all hooks are imported properly
-
 function EntryPage() {
   const { id } = useParams();
   const [entry, setEntry] = useState(null);
@@ -24,6 +19,7 @@ function EntryPage() {
       const entryData = await getDiaryContentById(id);
       const diaryEntry = Array.isArray(entryData) ? entryData[0] : entryData;
       setEntry(diaryEntry);
+      console.log("ISINYA:", diaryEntry);
 
       const { processedContent, metadata } = renderDiaryContent(diaryEntry);
       const mdxModule = await evaluate(processedContent, {
@@ -53,7 +49,7 @@ function EntryPage() {
 
   return (
     <div className="bg-gradient-to-b from-white to-blue-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-1 lg:px-6 py-10">
         <Link
           to="/"
           className="mb-6 text-blue-600 hover:text-blue-800 flex items-center"
@@ -105,7 +101,8 @@ function EntryPage() {
               </div>
             )}
 
-            <div className="prose prose-lg max-w-none">
+            {/* <div className="prose prose-lg max-w-none"> */}
+            <div className="prose prose-lg max-w-none prose-li:my-2 prose-ul:pl-5">
               <Content components={mdxComponents} />
             </div>
 
