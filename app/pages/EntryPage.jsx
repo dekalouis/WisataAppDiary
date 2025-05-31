@@ -7,11 +7,6 @@ import { getDiaryContentById } from "../../api/cms";
 import { renderDiaryContent } from "../../utils/cms";
 import { mdxComponents } from "../components/MDXRenderer";
 
-//memoize so we dont have to repeat the same mdx
-// const mdxCache = new Map();
-
-// Assumes mdxComponents and all hooks are imported properly
-
 function EntryPage() {
   const { id } = useParams();
   const [entry, setEntry] = useState(null);
@@ -54,7 +49,7 @@ function EntryPage() {
 
   return (
     <div className="bg-gradient-to-b from-white to-blue-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-1 lg:px-6 py-10">
         <Link
           to="/"
           className="mb-6 text-blue-600 hover:text-blue-800 flex items-center"
