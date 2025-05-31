@@ -19,8 +19,11 @@
     "paths": {
       "@utils/*": ["../utils/*"],
       "@api/*": ["../api/*"]
-    }
+    },
+    "typeRoots": ["node_modules/@types"],
+    "allowJs": true
   },
+  "include": ["src", "src/typings.d.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

@@ -1,0 +1,27 @@
+<div
+  class="min-h-screen flex flex-col bg-gradient-to-b from-white to-blue-50 text-gray-900"
+>
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+      <a
+        routerLink="/"
+        class="text-2xl font-bold tracking-tight text-gray-600 hover:text-gray-700 transition-colors"
+      >
+        WisataApp Diary
+      </a>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-1 lg:py-2">
+    <router-outlet />
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-center text-sm text-gray-500">
+      © 2024 WisataApp · Built with Angular + Vite
+    </div>
+  </footer>
+</div>
