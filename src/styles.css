@@ -159,3 +159,22 @@
   border-radius: 0.5rem;
   margin: 1rem 0;
 }
+
+.embed-fallback {
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.tiktok-embed,
+.youtube-embed,
+.twitter-embed {
+  margin: 1.5rem 0;
+}
+
+.youtube-embed iframe,
+.tiktok-embed iframe {
+  border-radius: 0.5rem;
+}
