@@ -18,3 +18,9 @@ You may put any documentation or notes related to your submission here.
 Deploy link (React): https://wisataapp-int.web.app/
 
 Deploy link (Angular): https://wisataapp-int-ang.web.app/ (Trying things out!)
+
+---
+
+Notes for me:
+ng build --configuration production
+firebase deploy --only hosting:angular-app
