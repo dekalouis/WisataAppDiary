@@ -16,4 +16,5 @@
 You may put any documentation or notes related to your submission here.
 
 Deploy link (React): https://wisataapp-int.web.app/
-Deploy link (Angular): https://wisataapp-int-ang.web.app/
+
+Deploy link (Angular): https://wisataapp-int-ang.web.app/ (Trying things out!)
