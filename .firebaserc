@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "wisataapp-int"
+  },
+  "targets": {
+    "wisataapp-int": {
+      "hosting": {
+        "angular-app": [
+          "wisataapp-int-ang"
+        ]
+      }
+    }
+  }
+}
