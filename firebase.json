@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "angular-app",
-    "public": "dist",
+    "public": "dist/wisata-app-angular/browser",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
