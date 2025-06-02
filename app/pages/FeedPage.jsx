@@ -98,7 +98,14 @@ function FeedPage() {
                     <div className="flex items-center justify-between text-sm text-gray-500">
                       <span>
                         {entry.created_dt
-                          ? new Date(entry.created_dt).toLocaleDateString()
+                          ? new Date(entry.created_dt).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )
                           : "No date"}
                       </span>
                       {entry.content && (
