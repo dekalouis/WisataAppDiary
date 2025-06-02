@@ -152,14 +152,6 @@
   list-style-position: inside;
 }
 
-/* TikTok embed styling */
-.tiktok-embed {
-  background-color: #f3f4f6;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin: 1rem 0;
-}
-
 .embed-fallback {
   background-color: #f3f4f6;
   padding: 1rem;
@@ -170,11 +162,54 @@
 
 .tiktok-embed,
 .youtube-embed,
-.twitter-embed {
+.twitter-embed,
+.instagram-embed {
   margin: 1.5rem 0;
 }
 
 .youtube-embed iframe,
 .tiktok-embed iframe {
   border-radius: 0.5rem;
+}
+
+/* Aspect ratio support for TikTok (9:16) */
+.aspect-\[9\/16\] {
+  aspect-ratio: 9 / 16;
+}
+
+/* Responsive height for YouTube */
+.h-64 {
+  height: 16rem;
+}
+
+@media (min-width: 768px) {
+  .md\:h-96 {
+    height: 24rem;
+  }
+}
+
+/* Flex utilities */
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
